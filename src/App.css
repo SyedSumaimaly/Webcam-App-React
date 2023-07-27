@@ -39,11 +39,20 @@ button {
     box-sizing: border-box;
 }
 
+li {
+    cursor: pointer;
+}
+
 .filter_div li {
     margin: 5px;
     padding-bottom: 1px;
     width: auto;
-    border: 1px solid black;
+    border: 2px solid black;
     list-style: none;
     box-sizing: border-box;
+
+}
+
+.filter_div li:hover {
+    border: 2px solid rgb(16, 12, 255);
 }

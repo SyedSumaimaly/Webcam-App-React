@@ -13,7 +13,7 @@ const videoConstraints = {
 
 const cloudinary = new Cloudinary({
   cloud: {
-    cloudName: process.env.CLOUDINARY_CLOUD_NAME
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME || "dpqcnekdn"
   },
   url: {
     secure: true // force https, set to false to force http
@@ -52,11 +52,15 @@ function App() {
   const [filter, setfilter] = useState();
 
 
-  const cloudImage = cld_Data?.public_id && cloudinary.image(cld_Data?.public_id);
-  const src = cloudImage?.toURL() || imgSrc;
+  const cloudImage = cld_Data && cloudinary.image(cld_Data.public_id);
+  let src = imgSrc
 
-  if (cloudImage && filter ) {
-    cloudImage.effect(`e_art:${filter}`)
+  if (cloudImage && filter) {
+    if (filter) {
+      cloudImage.effect(`e_art:${filter}`)
+
+    }
+    src = cloudImage.toURL();
   }
 
   useEffect(() => {
@@ -108,7 +112,7 @@ function App() {
               return (
                 <li key={filter}>
                   <button onClick={() => setfilter(filter)}>
-                    <img width="100" height="100" src="https://res.cloudinary.com/demo/image/upload/w_300/horses.jpg" alt="abs" />
+                    <img width="100" height="100" src={cloudinary.image(cld_Data?.public_id || 'https://res.cloudinary.com/dpqcnekdn/image/upload/v1687254857/cld-sample-2.jpg').resize('w_200,h_200').effect(`e_art:${filter}`).toURL()} alt={filter} />
                     <span>{filter}</span>
                   </button>
                 </li>

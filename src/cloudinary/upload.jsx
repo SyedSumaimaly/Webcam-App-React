@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from 'cloudinary';
+const cloudinary = require('cloudinary').v2
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,7 +11,9 @@ cloudinary.config({
 export default async function handler(req, res) {
     const { image } = JSON.parse(req.body);
 
-    const result = await cloudinary.uploader(image);
+    const result = await cloudinary.uploader.upload(image, {
+        folder: 'cloudinary-camera-filters'
+    });
 
-    res.status(200).json({...results})
+    res.status(200).json({ ...result });
 }
