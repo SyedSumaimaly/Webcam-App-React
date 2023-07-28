@@ -66,7 +66,7 @@ function App() {
   useEffect(() => {
     if (!imgSrc) return;
     (async function run() {
-      const response = await fetch('https://api.cloudinary.com/v1_1/myclouddatabase/image/upload', {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`, {
         method: 'POST',
         body: JSON.stringify({
           image: imgSrc
