@@ -5,11 +5,21 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Cloudinary } from '@cloudinary/url-gen';
 
+const cameraWidth = 400;
+const cameraHeight = 400;
+const aspectRatio = cameraWidth / cameraHeight;
+
+
 const videoConstraints = {
-  width: 720,
-  height: 720,
-  aspectRatio: 1,
+  width: {
+    min: cameraWidth
+  },
+  height: {
+    min: cameraHeight
+  },
+  aspectRatio
 };
+
 
 const cloudinary = new Cloudinary({
   cloud: {
@@ -63,17 +73,24 @@ function App() {
     src = cloudImage.toURL();
   }
 
+
   useEffect(() => {
     if (!imgSrc) return;
     (async function run() {
-      const response = await fetch("https://api.cloudinary.com/v1_1/dpqcnekdn/image/upload", {
-        method: 'POST',
-        body: JSON.stringify({
-          image: imgSrc
-        })
-      }).then((r) => r.json());
-      setCld_Data(response);
-      console.log('response', response);
+      const data = new FormData();
+      data.append("file", imgSrc);
+      data.append("upload_preset", "Webcam");
+      data.append("cloud_name", "dpqcnekdn");
+      try {
+        const response = await fetch("https://api.cloudinary.com/v1_1/dpqcnekdn/image/upload", {
+          method: 'POST',
+          body: data,
+        }
+        ).then((r) => r.json());
+        setCld_Data(response);
+      } catch (error) {
+        console.error("Error uploading to cloudinary", error);
+      }
     })();
   }, [imgSrc]);
 
@@ -91,28 +108,29 @@ function App() {
     <>
       <div className='main'>
         <div >
+          <h2>Webcam App</h2>
           <div className='web_cam_div'>
             {src && <img src={src} alt="Abs" />}
-            {!src && <Webcam ref={webcamRef} videoConstraints={videoConstraints} />}
+            {!src && <Webcam ref={webcamRef} videoConstraints={videoConstraints} width={cameraWidth} height={cameraHeight} />}
           </div>
 
-          <div>
-            <button onClick={handleCapture}>Capture photo</button>
-            <button onClick={handleReset}>Reset</button>
+          <div className='btndiv'>
+            <button onClick={handleCapture} className="btn capbtn">Capture photo</button>
+            <button onClick={handleReset} className='resetBtn btn'>Reset</button>
 
           </div>
         </div>
       </div >
       {/* filter section */}
-      <div >
+      <div className='filter'>
         <h2>Filters</h2>
         <div className='filter_div_main'>
           <ul className='filter_div'>
             {artFilter.map(filter => {
               return (
                 <li key={filter}>
-                  <button onClick={() => setfilter(filter)}>
-                    <img width="100" height="100" src={cloudinary.image(cld_Data?.public_id || 'https://res.cloudinary.com/dpqcnekdn/image/upload/v1687254857/cld-sample-2.jpg').resize('w_200,h_200').effect(`e_art:${filter}`).toURL()} alt={filter} />
+                  <button className='btn_filter' onClick={() => setfilter(filter)}>
+                    <img width="100" height="100" src={cloudinary.image(cld_Data).resize('w_200,h_200').effect(`e_art:${filter}`).toURL()} alt={filter} />
                     <span>{filter}</span>
                   </button>
                 </li>

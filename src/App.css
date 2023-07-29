@@ -1,13 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@1&family=Roboto:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital@1&family=Raleway:wght@500&display=swap');
 
+
+body{
+    background-color: aqua;
+}
 
 .main {
     display: flex;
     justify-content: center;
-    background-color: aqua;
     width: 100%;
     height: auto;
-    padding-bottom: 10%;
+    padding-bottom: 2%;
 }
 
 .web_cam_div {
@@ -18,7 +21,7 @@ button {
     width: 100%;
     padding: 1%;
     border-radius: 5px;
-    font-family: 'Roboto';
+    font-family: 'Kanit';
     border: none;
 }
 
@@ -39,20 +42,51 @@ button {
     box-sizing: border-box;
 }
 
-li {
+.btn_filter {
     cursor: pointer;
+    border: 2px solid black;
+    padding: 2%;
 }
 
 .filter_div li {
     margin: 5px;
-    padding-bottom: 1px;
     width: auto;
-    border: 2px solid black;
     list-style: none;
     box-sizing: border-box;
 
 }
 
-.filter_div li:hover {
+.btn_filter:hover {
     border: 2px solid rgb(16, 12, 255);
+}
+
+.filter {
+margin-top: 1%;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Kanit';
+
+}
+
+.resetBtn{
+    background-color: red;
+    margin-top: 3%;
+}
+
+.resetBtn:hover{
+    background-color: rgb(184, 9, 9);
+
+}
+
+.capbtn:hover{
+    background-color: rgb(199, 199, 199);
+}
+
+.btn{
+    padding: 2%;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: 660;
 }
