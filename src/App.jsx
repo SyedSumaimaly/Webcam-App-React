@@ -130,7 +130,7 @@ function App() {
               return (
                 <li key={filter}>
                   <button className='btn_filter' onClick={() => setfilter(filter)}>
-                    <img width="100" height="100" src={cloudinary.image(cld_Data).resize('w_200,h_200').effect(`e_art:${filter}`).toURL()} alt={filter} />
+                    <img width="100" height="100" src={cloudinary.image(cld_Data?.public_id).resize('w_200,h_200').effect(`e_art:${filter}`).toURL()} alt={filter} />
                     <span>{filter}</span>
                   </button>
                 </li>
